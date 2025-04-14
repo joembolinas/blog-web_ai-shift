@@ -1,0 +1,589 @@
+/* --- CSS Reset & Base Styles --- */
+:root {
+    --primary-dark: #0a192f; /* Navy */
+    --primary-medium: #1d3557; /* Darker Blue */
+    --primary-light: #457b9d; /* Medium Blue */
+    --accent-light: #a8dadc; /* Light Cyan/Blue */
+    --accent-bright: #64ffda; /* Bright Teal/Cyan - for highlights */
+    --text-light: #ccd6f6; /* Light Grey/Blue for text on dark */
+    --text-medium: #8892b0; /* Medium Grey/Blue for less emphasis */
+    --text-dark: #0a192f; /* Dark Navy for text on light */
+    --background-light: #f1faee; /* Very Light Off-white/Blue */
+    --card-bg: rgba(29, 53, 87, 0.7); /* Semi-transparent card bg */
+    --card-bg-hover: rgba(69, 123, 157, 0.6); /* Slightly different bg for hover */
+    --border-color: #457b9d;
+    --shadow-color: rgba(0, 0, 0, 0.2);
+    --shadow-color-strong: rgba(2, 12, 27, 0.7); /* Near black shadow */
+
+    --scroll-behavior: smooth; /* Can be overridden by user preferences */
+    --transition-speed: 0.3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --scroll-behavior: auto;
+        --transition-speed: 0.01ms;
+    }
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: var(--scroll-behavior);
+    scroll-padding-top: 70px; /* Offset for sticky nav */
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--primary-dark);
+    color: var(--text-light);
+    line-height: 1.7;
+    font-size: 16px;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+section {
+    padding: 80px 0;
+    border-bottom: 1px solid var(--primary-medium);
+    overflow-x: hidden; /* Prevent horizontal scroll from slight hover scales */
+}
+section:last-of-type {
+    border-bottom: none;
+}
+section:nth-child(odd) { /* Alternating background for visual separation */
+     background-color: var(--primary-medium);
+}
+
+h1, h2, h3, h4 {
+    font-weight: 600;
+    color: var(--accent-light);
+    margin-bottom: 20px;
+}
+
+h1 { font-size: 2.8rem; line-height: 1.2; color: var(--accent-bright)}
+h2 { font-size: 2rem; color: var(--accent-light); }
+h3 { font-size: 1.4rem; color: var(--text-light); margin-top: 30px; }
+h4 { font-size: 1.1rem; color: var(--accent-light); margin-top: 5px; margin-bottom: 10px;} /* For card subheadings */
+
+
+p {
+    margin-bottom: 15px;
+    color: var(--text-medium);
+}
+p strong {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+
+a {
+    color: var(--accent-bright);
+    text-decoration: none;
+    transition: opacity var(--transition-speed) ease;
+}
+
+a:hover {
+    opacity: 0.8;
+}
+
+ul {
+    list-style: none;
+    padding-left: 20px;
+}
+
+ul li::before {
+    content: "▹"; /*▹ ► ➤*/
+    color: var(--accent-bright);
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+ul li {
+     margin-bottom: 10px;
+     color: var(--text-medium);
+}
+ ul li strong {
+     color: var(--text-light);
+ }
+
+
+img, .visual {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 30px auto;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+}
+.visual { /* Placeholder style if image fails */
+    background-color: var(--primary-light);
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--primary-dark);
+    border: 1px solid var(--border-color);
+}
+
+
+/* --- Navigation --- */
+nav {
+    background-color: rgba(10, 25, 47, 0.85); /* Slightly transparent dark blue */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px); /* Safari */
+    color: var(--text-light);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+nav .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-bright);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    padding-left: 0; /* Override base ul style */
+}
+ nav ul li::before { content: none; } /* Remove bullet */
+
+nav ul li {
+    margin-left: 25px;
+    margin-bottom: 0; /* Override base li style */
+}
+
+nav ul li a {
+    color: var(--text-light);
+    font-weight: 400;
+    padding-bottom: 5px;
+    border-bottom: 2px solid transparent;
+    transition: border-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+    color: var(--accent-bright);
+    border-bottom-color: var(--accent-bright);
+}
+
+/* Mobile Nav Toggle */
+ .menu-toggle {
+    display: none;
+    cursor: pointer;
+    font-size: 1.8rem;
+    background: none;
+    border: none;
+    color: var(--text-light);
+ }
+
+
+/* --- Header --- */
+header {
+    background: linear-gradient(rgba(10, 25, 47, 0.8), rgba(10, 25, 47, 0.9)), url('https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80') no-repeat center center/cover;
+    min-height: 70vh; /* Use min-height for flexibility */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--text-light);
+    padding: 40px 20px; /* Add padding top/bottom */
+}
+
+header h1 {
+     margin-bottom: 15px;
+}
+header p {
+     font-size: 1.2rem;
+     max-width: 700px;
+     color: var(--text-medium);
+}
+
+/* --- Header Creator Info --- */
+header .creator-info {
+    margin-top: 30px; /* Space below subtitle */
+    font-size: 1rem; /* Slightly smaller */
+    color: var(--text-medium);
+    line-height: 1.5; /* Adjust line spacing */
+}
+header .creator-info p {
+    margin-bottom: 5px; /* Smaller margin between creator lines */
+    color: var(--text-medium); /* Ensure color consistency */
+}
+
+/* --- Section Specific Styles & Layouts --- */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    align-items: stretch; /* Make cards same height if needed */
+}
+
+.card {
+    background-color: var(--card-bg);
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    display: flex; /* For vertical alignment if needed */
+    flex-direction: column;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    /* Added transitions for hover effects */
+    transition:
+        transform var(--transition-speed) ease,
+        box-shadow var(--transition-speed) ease,
+        border-color var(--transition-speed) ease,
+        background-color var(--transition-speed) ease;
+}
+.card:hover {
+     transform: translateY(-8px); /* Lift effect */
+     box-shadow: 0 12px 25px var(--shadow-color-strong); /* Stronger shadow */
+     border-color: var(--accent-bright); /* Highlight border */
+     background-color: var(--card-bg-hover); /* Subtle background change */
+}
+.card h3 {
+     margin-top: 0;
+     color: var(--accent-light);
+     border-bottom: 1px solid var(--accent-bright);
+     padding-bottom: 10px;
+     transition: color var(--transition-speed) ease; /* Transition for text color */
+}
+.card h4 { /* Specific for conclusion cards */
+     transition: color var(--transition-speed) ease;
+}
+
+.card:hover h3,
+.card:hover h4 {
+     color: var(--accent-bright); /* Make heading brighter on hover */
+}
+
+
+.two-column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: center;
+}
+ .two-column .text-content { order: 1; }
+ .two-column .visual-content { order: 2; }
+
+ @media (max-width: 768px) {
+     .two-column {
+         grid-template-columns: 1fr;
+         gap: 30px;
+     }
+     .two-column .visual-content { order: 1; } /* Image first on mobile */
+     .two-column .text-content { order: 2; }
+ }
+
+
+/* Table Visualizations */
+.table-viz {
+    background-color: var(--primary-dark);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 30px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 10px var(--shadow-color);
+}
+.table-viz-header {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    padding: 15px 20px;
+    font-weight: 600;
+    display: grid;
+    /* grid-template-columns adjusted per table below */
+    gap: 10px;
+}
+.table-viz-row {
+    display: grid;
+    /* grid-template-columns adjusted per table below */
+    gap: 10px;
+    padding: 15px 20px;
+    border-bottom: 1px solid var(--primary-medium);
+    transition: background-color var(--transition-speed) ease;
+}
+.table-viz-row:last-child {
+    border-bottom: none;
+}
+.table-viz-row:hover {
+    background-color: rgba(69, 123, 157, 0.1); /* Subtle hover for rows */
+}
+.table-viz-row div {
+    color: var(--text-medium);
+}
+.table-viz-row div strong {
+    color: var(--text-light);
+    display: block;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+}
+ /* Specific Table Styles */
+ .portfolio-table .table-viz-header,
+ .portfolio-table .table-viz-row { grid-template-columns: 1fr 2fr 2fr; }
+
+ .skills-table .table-viz-header,
+ .skills-table .table-viz-row { grid-template-columns: 1fr 2fr 2fr; }
+
+ @media (max-width: 600px) {
+    .table-viz-header, .table-viz-row {
+        grid-template-columns: 1fr; /* Stack columns on small screens */
+        gap: 15px;
+        text-align: left;
+        padding: 15px;
+    }
+    .table-viz-header { display: none; } /* Hide header, use labels */
+     .table-viz-row div::before {
+         content: attr(data-label) ": ";
+         font-weight: bold;
+         color: var(--accent-light);
+         display: inline-block;
+         margin-right: 5px;
+     }
+     .table-viz-row div strong { display: none; } /* Hide old label */
+ }
+
+
+/* Action Plan Timeline */
+.timeline {
+     position: relative;
+     padding: 20px 0;
+ }
+ .timeline::before { /* The vertical line */
+     content: '';
+     position: absolute;
+     left: 20px;
+     top: 0;
+     bottom: 0;
+     width: 4px;
+     background-color: var(--primary-light);
+     border-radius: 2px;
+ }
+ .timeline-item {
+     position: relative;
+     margin-bottom: 40px;
+     padding-left: 50px;
+ }
+ .timeline-item::before { /* Dot on the line */
+     content: '';
+     position: absolute;
+     left: 11px; /* Adjusted for center alignment on 4px line */
+     top: 5px;
+     width: 18px;
+     height: 18px;
+     background-color: var(--primary-dark);
+     border: 3px solid var(--accent-bright);
+     border-radius: 50%;
+     z-index: 1;
+     transition: transform var(--transition-speed) ease;
+ }
+ .timeline-item:hover::before {
+    transform: scale(1.2); /* Make dot slightly larger on hover */
+ }
+ .timeline-content {
+     background: var(--card-bg);
+     padding: 20px;
+     border-radius: 6px;
+     border: 1px solid var(--border-color);
+     box-shadow: 0 4px 10px var(--shadow-color);
+     /* Added transitions */
+     transition:
+        transform var(--transition-speed) ease,
+        box-shadow var(--transition-speed) ease,
+        border-color var(--transition-speed) ease,
+        background-color var(--transition-speed) ease;
+ }
+ .timeline-item:hover .timeline-content {
+    transform: translateX(5px); /* Slight shift right */
+    box-shadow: 0 8px 20px var(--shadow-color-strong);
+    border-color: var(--accent-light);
+    background-color: var(--card-bg-hover);
+ }
+
+ .timeline-content h3 {
+     margin-top: 0;
+     color: var(--accent-light);
+     font-size: 1.2rem;
+     transition: color var(--transition-speed) ease;
+ }
+  .timeline-item:hover .timeline-content h3 {
+     color: var(--accent-bright);
+  }
+  .timeline-content p:last-child { margin-bottom: 0; }
+
+ @media (max-width: 768px) {
+    .timeline::before { left: 10px; }
+    .timeline-item { padding-left: 40px; }
+    .timeline-item::before { left: 2px; width: 16px; height: 16px; } /* Adjust dot position */
+     .timeline-item:hover .timeline-content {
+        transform: none; /* Disable horizontal shift on mobile if desired */
+     }
+ }
+
+
+/* --- References Section --- */
+#references {
+    background-color: var(--primary-medium); /* Match alternating background */
+    /* border-bottom: none; Inherits from section:last-of-type */
+}
+
+#references h2 {
+    margin-bottom: 15px;
+}
+
+#references > .container > p { /* Style the intro paragraph */
+    margin-bottom: 30px;
+    color: var(--text-light); /* Make intro text slightly brighter */
+    font-size: 1.1rem;
+}
+
+.references-list {
+    list-style: decimal; /* Use standard numbers */
+    padding-left: 25px; /* Indent numbers */
+    margin-left: 15px; /* Add margin for overall list */
+}
+
+.references-list li {
+    margin-bottom: 18px; /* Space between references */
+    color: var(--text-medium); /* Standard text color */
+    padding-left: 10px; /* Space after number */
+    line-height: 1.6; /* Slightly more line height for readability */
+}
+
+.references-list li::before {
+    content: none; /* Remove the default '▹' */
+}
+
+.references-list li a {
+    color: var(--accent-bright); /* Standard link color */
+    /* Important for long URLs */
+    word-break: break-word; /* Break long words/URLs */
+    overflow-wrap: break-word; /* Alternate property */
+    /* Optional: slightly different link appearance */
+    /* text-decoration: underline; */
+    /* text-decoration-style: dotted; */
+}
+
+.references-list li a:hover {
+    opacity: 0.8;
+    text-decoration: underline; /* Add underline on hover */
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary-dark);
+    color: var(--text-medium);
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 40px; /* Ensure space above footer */
+    border-top: 1px solid var(--primary-medium);
+    font-size: 0.9rem;
+}
+
+footer p {
+     margin-bottom: 8px; /* Adjust spacing if needed */
+}
+footer p:last-child {
+     margin-bottom: 0;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.7rem; }
+    header { min-height: 50vh; }
+
+    nav .container {
+        flex-direction: row; /* Keep logo and toggle on same line */
+        justify-content: space-between; /* Space them out */
+        align-items: center;
+        position: relative; /* Needed for absolute positioning of links */
+    }
+    nav ul {
+        display: none; /* Hide links initially */
+        position: absolute;
+        top: 100%; /* Position below the nav bar */
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        width: 100%;
+        background-color: rgba(10, 25, 47, 0.95); /* Slightly more opaque */
+        padding: 10px 0;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        border-top: 1px solid var(--primary-medium);
+    }
+    nav ul.active {
+        display: flex; /* Show when active */
+    }
+    nav ul li {
+        margin: 0;
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+    nav ul li a {
+        display: block;
+        padding: 12px 15px;
+        border-bottom: none;
+        color: var(--text-light);
+        border-bottom: 1px solid var(--primary-medium); /* Separator */
+    }
+     nav ul li:last-child a {
+         border-bottom: none;
+     }
+
+    nav ul li a:hover, nav ul li a.active {
+        background-color: var(--primary-medium);
+        color: var(--accent-bright);
+        border-bottom-color: var(--primary-medium); /* Keep border color consistent */
+    }
+    .menu-toggle {
+        display: block; /* Show hamburger */
+        /* Removed absolute positioning */
+    }
+     body { font-size: 15px; }
+}
+
+@media (max-width: 600px) {
+    .references-list {
+        padding-left: 15px;
+        margin-left: 5px;
+    }
+    .references-list li {
+        padding-left: 5px;
+        margin-bottom: 15px;
+    }
+    header .creator-info {
+        font-size: 0.9rem;
+    }
+}
